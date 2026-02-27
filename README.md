@@ -1,342 +1,414 @@
-
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ENIAC • Marcos Vínicius</title>
 
+<!-- 
+========================================================================
+  ÁREA DO CSS (ESTILOS VISUAIS)
+  Se você quiser separar os arquivos, copie o conteúdo dentro da 
+  tag <style> para um arquivo chamado "style.css".
+======================================================================== 
+-->
 <style>
-  /* ===============================
-     Variáveis e Reset
-  ================================== */
+  /* --- 1. VARIÁVEIS DE CORES --- */
   :root {
     color-scheme: dark;
-    --black: #030303;
-    --black-soft: #0b0b0b;
+    --black: #040404;
+    --black-soft: #0c0c0c;
     --card: #111111;
-    --text: #f7f7f7;
-    --muted: #c5c5c5;
-    --accent: #ff1e56;
-    --accent-dark: #9d0026;
+    --red: #ff1e56;
+    --red-dark: #b10032;
     --border: rgba(255, 30, 86, 0.35);
-  }
-  * {
-    box-sizing: border-box;
+    --text: #f5f5f5;
+    --muted: #c7c7c7;
   }
 
-  /* ===============================
-     Estrutura global
-  ================================== */
-  body {
+  /* --- 2. CONFIGURAÇÕES GERAIS --- */
+  * {
+    box-sizing: border-box;
     margin: 0;
-    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
-    background: radial-gradient(circle at top, #191919 0%, var(--black) 55%);
+    padding: 0;
+  }
+
+  body {
+    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a 0%, var(--black) 45%, #010101 100%);
     color: var(--text);
     min-height: 100vh;
     padding: clamp(1rem, 3vw, 2.5rem);
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  main {
-    width: min(1200px, 100%);
-    padding: clamp(1.5rem, 4vw, 3.5rem);
-    border-radius: 34px;
-    background: linear-gradient(145deg, rgba(0,0,0,0.95), rgba(5,5,5,0.85));
-    border: 1px solid rgba(255, 30, 86, 0.25);
-    box-shadow: 0 40px 120px rgba(0,0,0,0.8), 0 0 90px rgba(255, 30, 86, 0.15);
-  }
-  section + section {
-    margin-top: 2.75rem;
-  }
-  h1, h2, h3 {
-    margin: 0;
-    letter-spacing: 0.05em;
-  }
-  h1 {
-    font-size: clamp(2.6rem, 5vw, 4rem);
-    text-transform: uppercase;
-  }
-  h2 {
-    font-size: clamp(1.6rem, 3vw, 2.3rem);
-    color: var(--accent);
-    margin-bottom: 1rem;
-  }
-  p {
-    margin: 0;
     line-height: 1.7;
   }
 
-  /* ===============================
-     Elementos reutilizáveis
-  ================================== */
+  /* --- 3. CONTAINER PRINCIPAL --- */
+  main {
+    width: min(1200px, 100%);
+    background: linear-gradient(145deg, rgba(0,0,0,0.95), rgba(6,6,6,0.8));
+    border-radius: 32px;
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+    border: 1px solid rgba(255, 30, 86, 0.25);
+    box-shadow: 0 40px 120px rgba(0, 0, 0, 0.8), 0 0 80px rgba(255, 30, 86, 0.15);
+  }
+
+  section + section {
+    margin-top: 3.5rem;
+  }
+
+  /* --- 4. TIPOGRAFIA GERAL --- */
+  h1 {
+    font-size: clamp(2.6rem, 5vw, 4rem);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #fff, var(--red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  h2 {
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    color: var(--red);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em;
+  }
+
+  h3 {
+    font-size: 1rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  /* --- 5. COMPONENTES VISUAIS --- */
   .badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.4rem 1.2rem;
+    gap: 0.5rem;
+    padding: 0.5rem 1.5rem;
     border-radius: 999px;
     border: 1px solid var(--border);
     background: rgba(255, 30, 86, 0.12);
     text-transform: uppercase;
     font-size: 0.85rem;
     letter-spacing: 0.15em;
-    color: var(--muted);
+    color: var(--text);
+    margin-bottom: 1.5rem;
   }
-  .muted {
-    color: var(--muted);
+
+  /* --- 6. GRIDS E LAYOUTS --- */
+  .hero {
+    text-align: center;
+    margin-bottom: 3rem;
   }
-  .grid {
+
+  .hero p {
+    max-width: 800px;
+    margin-inline: auto;
+    font-size: 1.1rem;
+  }
+
+  .grid-4 {
     display: grid;
-    gap: 1.2rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
   }
-  .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+  }
+
+  /* --- 7. CARDS DE INFORMAÇÃO --- */
   .card {
-    position: relative;
     background: var(--card);
-    border-radius: 24px;
-    padding: 1.35rem;
-    border: 1px solid rgba(255, 30, 86, 0.24);
+    border-radius: 22px;
+    padding: 1.8rem;
+    border: 1px solid rgba(255, 30, 86, 0.2);
+    position: relative;
     overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
   }
+
+  .card:hover {
+    transform: translateY(-5px);
+    border-color: var(--red);
+  }
+
   .card::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at top right, rgba(255, 30, 86, 0.12), transparent 55%);
+    background: radial-gradient(circle at top right, rgba(255, 30, 86, 0.15), transparent 60%);
     pointer-events: none;
   }
-  .card h3 {
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    color: var(--muted);
-    margin-bottom: 0.4rem;
-  }
+
   .card strong {
-    font-size: clamp(1.6rem, 3vw, 2.4rem);
-    color: var(--accent);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    color: var(--red);
     display: block;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.5rem;
+    font-weight: 800;
   }
-  .chip-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-  }
-  .chip {
-    padding: 0.45rem 1rem;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    background: rgba(255, 30, 86, 0.1);
-    font-size: 0.92rem;
-  }
+
+  /* --- 8. LISTAS E TIMELINES --- */
   .list {
     list-style: none;
-    margin: 0;
-    padding: 0;
   }
+
   .list li {
-    padding: 0.85rem 0;
+    padding: 1rem 0;
     border-bottom: 1px solid rgba(255, 30, 86, 0.15);
     display: flex;
-    gap: 0.6rem;
+    gap: 1rem;
     align-items: flex-start;
     color: var(--muted);
   }
+
   .list li span {
-    color: var(--accent);
-    font-weight: 600;
+    color: var(--red);
+    font-weight: bold;
+    font-size: 1.2rem;
   }
+
   .timeline {
-    border-left: 2px solid rgba(255, 30, 86, 0.7);
-    padding-left: 1.2rem;
+    border-left: 3px solid rgba(255, 30, 86, 0.5);
+    padding-left: 1.5rem;
     list-style: none;
-    margin: 0;
   }
+
   .timeline li {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     position: relative;
   }
+
   .timeline li::before {
     content: "";
     position: absolute;
-    left: -1.4rem;
-    top: 0.35rem;
-    width: 0.8rem;
-    height: 0.8rem;
+    left: -1.95rem;
+    top: 0.4rem;
+    width: 1rem;
+    height: 1rem;
     border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 6px rgba(255, 30, 86, 0.15);
+    background: var(--red);
+    box-shadow: 0 0 10px rgba(255, 30, 86, 0.5);
   }
+
   .timeline span {
     display: block;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 0.25rem;
+    font-weight: 800;
+    color: var(--red);
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
   }
+
+  /* --- 9. ELEMENTOS EXTRAS (CHIPS, QUOTES E RODAPÉ) --- */
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .chip {
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(255, 30, 86, 0.1);
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+
   blockquote {
-    margin: 0;
-    padding: 1.7rem;
+    padding: 2rem;
     border-radius: 24px;
-    border: 1px solid rgba(255, 30, 86, 0.3);
-    background: linear-gradient(120deg, rgba(255, 30, 86, 0.12), rgba(0,0,0,0.6));
+    border: 1px solid rgba(255, 30, 86, 0.4);
+    background: linear-gradient(120deg, rgba(255, 30, 86, 0.15), rgba(0,0,0,0.8));
     font-style: italic;
-    line-height: 1.8;
-    color: var(--muted);
+    font-size: 1.1rem;
+    text-align: center;
   }
+
   blockquote span {
     display: block;
-    margin-top: 0.8rem;
+    margin-top: 1rem;
     letter-spacing: 0.2em;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    font-style: normal;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--red);
+    font-weight: bold;
   }
-  footer {
-    margin-top: 3rem;
+
+  .footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 30, 86, 0.2);
     text-align: center;
     color: var(--muted);
     font-size: 0.95rem;
   }
-  footer span {
-    color: var(--accent);
-    font-weight: 700;
+
+  .footer span {
+    color: var(--red);
+    font-weight: 800;
   }
 </style>
 </head>
-
 <body>
+
+<!-- 
+========================================================================
+  ÁREA DO HTML (ESTRUTURA DA PÁGINA)
+  Este é o conteúdo principal, separado de forma limpa.
+======================================================================== 
+-->
 <main>
-
-  <!-- Hero -->
-  <section>
-    <div class="badge">⚙️ Primeiro computador eletrônico</div>
-    <h1>ENIAC</h1>
-    <p class="muted" style="max-width: 780px; margin-top: 0.8rem;">
-      O Electronic Numerical Integrator and Computer utilizou 17.468 válvulas de vácuo, 5 milhões de soldas e equipes visionárias
-      para acelerar cálculos militares, científicos e matemáticos, inaugurando a era digital em um cenário dominado por preto e vermelho vibrante.
+  
+  <!-- CABEÇALHO PRINCIPAL -->
+  <section class="hero">
+    <div class="badge">⚙️ O Início da Era Digital</div>
+    <h1>Projeto ENIAC</h1>
+    <p>
+      O Electronic Numerical Integrator and Computer revolucionou o século XX. 
+      Com suas 17.468 válvulas e painéis colossais, a máquina projetada por Eckert e Mauchly 
+      abriu os portões para o mundo moderno da computação, convertendo eletricidade pura em cálculos complexos.
     </p>
-    <div class="chip-row" style="margin-top: 1.5rem;">
-      <span class="chip">5.000 operações por segundo</span>
-      <span class="chip">20 acumuladores decimais</span>
-      <span class="chip">150 kW de energia</span>
-      <span class="chip">Projetado por Eckert & Mauchly</span>
-    </div>
   </section>
 
-  <!-- Métricas -->
+  <!-- SEÇÃO DE ESTATÍSTICAS -->
   <section>
-    <h2>Métricas icônicas</h2>
-    <div class="grid grid-4">
-      <article class="card"><h3>Dimensão</h3><strong>30 m</strong><p>Estrutura em U ocupando uma sala inteira.</p></article>
-      <article class="card"><h3>Peso</h3><strong>27 t</strong><p>Mais pesado que um caminhão articulado.</p></article>
-      <article class="card"><h3>Componentes</h3><strong>17.468</strong><p>Válvulas trabalhando em sincronia.</p></article>
-      <article class="card"><h3>Consumo</h3><strong>150 kW</strong><p>Energia de uma pequena vila.</p></article>
-      <article class="card"><h3>Funções</h3><strong>6</strong><p>Soma, subtração, multiplicação, divisão, raiz e lógica.</p></article>
-      <article class="card"><h3>Velocidade</h3><strong>10³ x</strong><p>Mais rápido que cálculos manuais.</p></article>
-      <article class="card"><h3>Operadores</h3><strong>80</strong><p>Profissionais para programar e manter.</p></article>
-      <article class="card"><h3>Vida útil</h3><strong>1945–1955</strong><p>Uma década impulsionando a ciência.</p></article>
-    </div>
-  </section>
-
-  <!-- História -->
-  <section class="grid grid-2">
-    <article>
-      <h2>Por que revolucionou</h2>
-      <ul class="list">
-        <li><span>⚡</span>Processamento totalmente eletrônico, deixando relés no passado.</li>
-        <li><span>🔁</span>Fluxo paralelo de dados, acelerando tarefas complexas.</li>
-        <li><span>🧠</span>Programação modular com cabos e painéis reconfiguráveis.</li>
-        <li><span>🌐</span>Aplicações militares, científicas, meteorológicas e nucleares.</li>
-        <li><span>🔭</span>A base para arquiteturas de programas armazenados.</li>
-      </ul>
-    </article>
-    <article>
-      <h2>Experiência de programação</h2>
-      <ul class="list">
-        <li><span>1</span>Planejamento detalhado em fluxogramas físicos.</li>
-        <li><span>2</span>Cabos e chaves definindo rotas de pulsos.</li>
-        <li><span>3</span>Tabelas plugáveis com constantes e funções.</li>
-        <li><span>4</span>Testes intensos antes da execução real.</li>
-        <li><span>5</span>Monitoramento contínuo e substituição de válvulas.</li>
-      </ul>
-    </article>
-  </section>
-
-  <!-- Módulos -->
-  <section>
-    <h2>Módulos principais</h2>
-    <div class="grid grid-3">
-      <article class="card"><h3>Acumuladores</h3><p>20 registradores decimais de 10 dígitos realizando somas e subtrações a 5.000 ops/s.</p></article>
-      <article class="card"><h3>Unidade de funções</h3><p>Executava multiplicações, divisões e raízes quadradas iterativas.</p></article>
-      <article class="card"><h3>Controle mestre</h3><p>Sincronizava pulsos e sequenciava instruções programadas.</p></article>
-      <article class="card"><h3>Tabelas plugáveis</h3><p>Cartões com constantes reutilizáveis conectados por cabos.</p></article>
-      <article class="card"><h3>I/O por cartões</h3><p>Entrada e saída usando equipamentos IBM padrão.</p></article>
-      <article class="card"><h3>Relés de temporização</h3><p>Garantiam integridade dos sinais ao longo de cabos extensos.</p></article>
-    </div>
-  </section>
-
-  <!-- Infraestrutura & Equipe -->
-  <section class="grid grid-2">
-    <article>
-      <h2>Infraestrutura tática</h2>
-      <div class="card"><h3>Layout</h3><p>Corredores em U com piso elevado para refrigeração e roteamento.</p></div>
-      <div class="card" style="margin-top: 1rem;"><h3>Ambiente</h3><p>Temperatura controlada e monitoramento 24/7 evitavam sobrecargas.</p></div>
-      <div class="card" style="margin-top: 1rem;"><h3>Resiliência</h3><p>Falhas isoladas de válvulas não derrubavam a rotina completa.</p></div>
-    </article>
-    <article>
-      <h2>Equipe pioneira</h2>
-      <div class="chip-row">
-        <span class="chip">👨‍🔧 J. Presper Eckert</span>
-        <span class="chip">👨‍🏫 John W. Mauchly</span>
-        <span class="chip">👩‍💻 Jean Bartik</span>
-        <span class="chip">👩‍💻 Betty Holberton</span>
-        <span class="chip">👩‍💻 Kathleen Antonelli</span>
-        <span class="chip">👩‍💻 Marlyn Meltzer</span>
-        <span class="chip">👩‍💻 Ruth Teitelbaum</span>
+    <h2>O Gigante em Números</h2>
+    <div class="grid-4">
+      <div class="card">
+        <h3>Área Ocupada</h3>
+        <strong>167 m²</strong>
+        <p>Ocupava todo o porão da Moore School.</p>
       </div>
-    </article>
+      <div class="card">
+        <h3>Peso Total</h3>
+        <strong>27 Ton.</strong>
+        <p>Aço, cabos e vidro formando um monstro eletrônico.</p>
+      </div>
+      <div class="card">
+        <h3>Potência Elétrica</h3>
+        <strong>150 kW</strong>
+        <p>Consumo capaz de enfraquecer as luzes da cidade.</p>
+      </div>
+      <div class="card">
+        <h3>Desempenho</h3>
+        <strong>5.000 /s</strong>
+        <p>Somas por segundo, mil vezes mais rápido que os humanos.</p>
+      </div>
+    </div>
   </section>
 
-  <!-- Linha do tempo -->
+  <!-- SEÇÃO DE INFORMAÇÕES DETALHADAS -->
+  <section class="split">
+    <div>
+      <h2>A Revolução Técnica</h2>
+      <ul class="list">
+        <li>
+          <span>⚡</span>
+          <div>Aboliu partes mecânicas, usando fluxos de elétrons no vácuo para realizar cálculos quase instantâneos.</div>
+        </li>
+        <li>
+          <span>🔁</span>
+          <div>Capaz de realizar operações paralelas graças a dezenas de acumuladores interconectados.</div>
+        </li>
+        <li>
+          <span>🧠</span>
+          <div>Iniciou a ciência do "software", exigindo diagramas lógicos complexos antes de cada execução.</div>
+        </li>
+      </ul>
+    </div>
+    
+    <div>
+      <h2>O Processo de Programação</h2>
+      <ul class="list">
+        <li>
+          <span>1</span>
+          <div>Matemáticos desenhavam a lógica em papel detalhado.</div>
+        </li>
+        <li>
+          <span>2</span>
+          <div>As operadoras ajustavam milhares de chaves e cabos fisicamente nas matrizes de painéis.</div>
+        </li>
+        <li>
+          <span>3</span>
+          <div>Testes de depuração (debugging) envolviam encontrar válvulas queimadas a olho nu.</div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SEÇÃO DA LINHA DO TEMPO -->
   <section>
-    <h2>Timeline ENIAC</h2>
+    <h2>Cronologia Histórica</h2>
     <ul class="timeline">
-      <li><span>1942</span>Proposta ao Exército dos EUA para cálculos balísticos.</li>
-      <li><span>1943</span>Construção inicia na Moore School sob sigilo.</li>
-      <li><span>1945</span>Testes confirmam desempenho sem precedentes.</li>
-      <li><span>1946</span>Demonstração pública resolve equações diferenciais em segundos.</li>
-      <li><span>1948</span>Atualização para suportar programação com códigos armazenados.</li>
-      <li><span>1950</span>Aplicado a pesquisas meteorológicas, nucleares e espaciais.</li>
-      <li><span>1955</span>Desativado e preservado em museus e universidades.</li>
+      <li>
+        <span>1943: O Acordo Militar</span>
+        O Exército dos EUA financia o "Projeto PX" secretamente para calcular tabelas de artilharia balística durante a 2ª Guerra Mundial.
+      </li>
+      <li>
+        <span>1945: Primeiro Sucesso</span>
+        A máquina é ligada pela primeira vez, resolvendo equações fundamentais para pesquisas avançadas de energia.
+      </li>
+      <li>
+        <span>1946: O Anúncio ao Mundo</span>
+        A imprensa e cientistas testemunham o ENIAC calcular a trajetória de um projétil mais rápido do que o próprio projétil no ar.
+      </li>
+      <li>
+        <span>1955: A Aposentadoria</span>
+        Desligado definitivamente. A tecnologia de válvulas foi substituída pelos primeiros transistores, tornando-o obsoleto, porém imortal.
+      </li>
     </ul>
   </section>
 
-  <!-- Impacto -->
+  <!-- SEÇÃO DA EQUIPE PIONEIRA -->
   <section>
-    <h2>Impacto duradouro</h2>
-    <div class="grid grid-3">
-      <article class="card"><h3>Arquitetura</h3><p>Fundamentou o EDVAC e consolidou a ideia de programas armazenados.</p></article>
-      <article class="card"><h3>Ciência</h3><p>Pioneiro em simulações de clima, armamentos e dinâmica de fluidos.</p></article>
-      <article class="card"><h3>Indústria</h3><p>Inspirou máquinas comerciais como UNIVAC e IBM 701.</p></article>
+    <h2>Mentes Brilhantes por trás do Fio</h2>
+    <p style="margin-bottom: 1.5rem;">A grandiosidade do projeto exigiu a união da engenharia de hardware e do pioneirismo da programação, liderado majoritariamente por mulheres.</p>
+    <div class="chip-row">
+      <span class="chip">👨‍🔧 J. Presper Eckert (Hardware)</span>
+      <span class="chip">👨‍🏫 John W. Mauchly (Teoria)</span>
+      <span class="chip">👩‍💻 Jean Bartik (Programadora Lider)</span>
+      <span class="chip">👩‍💻 Betty Holberton (Lógica)</span>
+      <span class="chip">👩‍💻 Kathleen Antonelli (Matemática)</span>
+      <span class="chip">👩‍💻 Marlyn Meltzer (Operações)</span>
+      <span class="chip">👩‍💻 Ruth Teitelbaum (Conversão de Dados)</span>
     </div>
   </section>
 
-  <!-- Citação -->
+  <!-- CITAÇÃO DE ENCERRAMENTO -->
   <section>
     <blockquote>
-      “O ENIAC eletrificou a matemática em escala inédita. Cada processador moderno ainda pulsa com ecos dessa ousadia em preto e vermelho.”
+      “As válvulas de vácuo do ENIAC queimaram intensamente para iluminar o caminho escuro rumo à era da informação digital.”
       <span>Marcos Vínicius</span>
     </blockquote>
   </section>
 
-  <!-- Rodapé -->
-  <footer>
-    Feito com orgulho por <span>Marcos Vínicius</span> • Celebrando o ENIAC em preto e vermelho vibrante
-  </footer>
+  <!-- RODAPÉ E CRÉDITOS -->
+  <div class="footer">
+    Desenvolvido com excelência por <span>Marcos Vínicius</span> <br> 
+    Homenageando a origem de todos os computadores.
+  </div>
 
 </main>
 </body>
